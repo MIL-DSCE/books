@@ -5,17 +5,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.in.bookapp.MainActivity;
 import com.in.bookapp.R;
 
 public class SignupActivity extends AppCompatActivity {
@@ -24,6 +28,7 @@ public class SignupActivity extends AppCompatActivity {
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +45,29 @@ public class SignupActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
 
+        //Creating firebase object
+        Firebase.setAndroidContext(this);
+
+
+
+
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                startActivity(new Intent(SignupActivity.this, FirstPage.class));
             }
         });
 
+        //Login Screen button
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
             }
         });
+
+
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,11 +106,24 @@ public class SignupActivity extends AppCompatActivity {
                                     Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                    startActivity(new Intent(SignupActivity.this, AddBooksActivity.class));
                                     finish();
                                 }
                             }
                         });
+
+                Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/"+password);
+
+                final Fiction fiction = new Fiction();
+
+
+                //Adding values
+                fiction.setName(email);
+                fiction.setMulti(password);
+
+                //Storing values to firebase
+                ref.child("Fiction").setValue(fiction);
+
 
             }
         });

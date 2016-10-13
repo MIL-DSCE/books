@@ -44,6 +44,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     Button bt;
     Button btn;
     Button rg_btn;
+    Button book_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,18 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Main2Activity.this, Main3Activity.class));
+            }
+        });
+
+        //book list button
+        findViewById(R.id.button_booklist).setOnClickListener(this);
+
+        book_btn = (Button)findViewById(R.id.button_list);
+
+        book_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Main2Activity.this, Main4Activity.class));
             }
         });
 

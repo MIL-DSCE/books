@@ -4,23 +4,35 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_bwlogo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".SplashScreen"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".FirstPage" />
         <activity android:name=".Main2Activity" />
         <activity
             android:name=".Main3Activity"
             android:label="@string/title_activity_main3"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SignupActivity"/>
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".SingleBookActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".AltLoginActivity" />
+        <activity android:name=".AddBooksActivity" />
+        <activity android:name=".AltCustomGridMainActivity" />
+        <activity android:name=".Main4Activity" />
+        <activity android:name=".MainDatabaseActivity" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

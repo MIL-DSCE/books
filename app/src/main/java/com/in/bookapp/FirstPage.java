@@ -24,6 +24,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +35,7 @@ import com.google.firebase.database.ValueEventListener;
  * Activity to demonstrate basic retrieval of the Google user's ID, email address, and basic
  * profile.
  */
-public class MainActivity extends AppCompatActivity implements
+public class FirstPage extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
 
@@ -47,6 +48,12 @@ public class MainActivity extends AppCompatActivity implements
 
     Button btn;
     Button bt;
+    Button login_btn;
+    Button grid_btn;
+    Button b3;
+    Button custom_btn;
+    Button database_button;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,20 +84,81 @@ public class MainActivity extends AppCompatActivity implements
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.disconnect_button).setOnClickListener(this);
 
-        btn = (Button)findViewById(R.id.open_activity_button);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        //login activity
+
+        login_btn = (Button) findViewById(R.id.login_button);
+        login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Main2Activity.class));
+                Log.d("TAG", "onClick: ");
+                startActivity(new Intent(FirstPage.this, LoginActivity.class));
             }
         });
 
 
 
+        //Add books
+        b3 = (Button) findViewById(R.id.button3);
+        b3.setOnClickListener(new View.OnClickListener() {
+
+                                  @Override
+                                  public void onClick(View v) {
+                                      startActivity(new Intent(FirstPage.this, AddBooksActivity.class));
+                                  }
+                              });
+
+
+        //custom button
+        custom_btn = (Button) findViewById(R.id.cust_sign_out);
+        custom_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FirstPage.this, ProfileActivity.class));
+            }
+        });
+
+        //custom grid
+
+        custom_btn = (Button) findViewById(R.id.alt_custom);
+        custom_btn.setOnClickListener(new View.OnClickListener(){
+
+                                           @Override
+                                           public void onClick(View v) {
+                                               startActivity(new Intent(FirstPage.this, AltCustomGridMainActivity.class));
+                                           }
+                                       });
+
+        // database button
+        database_button = (Button) findViewById(R.id.button4);
+        database_button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FirstPage.this, MainDatabaseActivity.class));
+            }
+        });
 
 
 
+        //grid view button
+
+        grid_btn = (Button) findViewById(R.id.grid_button);
+        grid_btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(FirstPage.this, Main4Activity.class));
+                                        }
+                                    });
+
+
+                bt = (Button) findViewById(R.id.register_button);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FirstPage.this, SignupActivity.class));
+            }
+        });
 
 
         // Read from the database
@@ -140,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements
         signInButton.setScopes(gso.getScopeArray());
         // [END customize_button]
     }
+
 
     @Override
     public void onStart() {
