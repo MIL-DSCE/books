@@ -27,12 +27,32 @@
         <activity android:name=".SingleBookActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".AltLoginActivity" />
         <activity android:name=".AddBooksActivity" />
         <activity android:name=".AltCustomGridMainActivity" />
         <activity android:name=".Main4Activity" />
-        <activity android:name=".MainDatabaseActivity" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ProfileMain" />
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ImageUploadActivity" />
+        <activity
+            android:name=".ListItemsActivity"
+            android:label="@string/title_activity_list_items"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BorrowBookActivity"
+            android:label="@string/title_activity_borrow_book"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BookDetailActivity"
+            android:label="BookDetailActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".BookListActivity"
+            android:label="BookListActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

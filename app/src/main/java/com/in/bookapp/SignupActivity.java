@@ -28,6 +28,8 @@ public class SignupActivity extends AppCompatActivity {
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
+    EditText userName;
+    private String userId;
 
 
     @Override
@@ -44,6 +46,8 @@ public class SignupActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
+        userName = (EditText) findViewById(R.id.usernamebtn);
+
 
         //Creating firebase object
         Firebase.setAndroidContext(this);
@@ -75,6 +79,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
+                String username = userName.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -83,6 +88,11 @@ public class SignupActivity extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(username)) {
+                    Toast.makeText(getApplicationContext(), "Choose an username!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -97,37 +107,28 @@ public class SignupActivity extends AppCompatActivity {
                         .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignupActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, "Successfully registered!", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
+                                    Toast.makeText(SignupActivity.this, "Authentication failed. " + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-                                    startActivity(new Intent(SignupActivity.this, AddBooksActivity.class));
+                                    startActivity(new Intent(SignupActivity.this, ProfileMain.class));
                                     finish();
                                 }
                             }
                         });
 
-                Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/"+password);
-
-                final Fiction fiction = new Fiction();
-
-
-                //Adding values
-                fiction.setName(email);
-                fiction.setMulti(password);
-
-                //Storing values to firebase
-                ref.child("Fiction").setValue(fiction);
-
 
             }
         });
+
+
     }
+
 
     @Override
     protected void onResume() {

@@ -38,8 +38,6 @@ public class Main4Activity extends AppCompatActivity {
                 // Pass image index
                 i.putExtra("id", position);
                 startActivity(i);
-
-
             }
         });
     }

@@ -9,9 +9,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.in.bookapp.MainActivity">
+    tools:context="com.in.bookapp.FirstPage">
 
-    <Button
+    Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
@@ -94,48 +94,40 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/grid_button"
-        android:id="@+id/grid_button"
-        android:background="@null"
-        android:textColor="@color/white"
-        android:textAllCaps="false"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/imageView"
-        android:textSize="18dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Books"
-        android:textColor="@color/white"
-        android:background="@null"
-        android:id="@+id/button3"
-        android:layout_below="@+id/login_button"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Alt Custom Grid"
         android:id="@+id/alt_custom"
-        android:layout_below="@+id/grid_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imageView" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/alt_custom" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Database"
-        android:id="@+id/button4"
-        android:layout_above="@+id/button3"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign Out"
-        android:id="@+id/cust_sign_out"
-        android:layout_alignTop="@+id/status"
+        android:text="New Button"
+        android:id="@+id/login_button"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button3"
+        android:layout_below="@+id/login_button"
+        android:layout_toStartOf="@+id/sign_in_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/cust_sign_out"
+        android:layout_below="@+id/textView6"
+        android:layout_toStartOf="@+id/sign_in_button" />
 
 </RelativeLayout>

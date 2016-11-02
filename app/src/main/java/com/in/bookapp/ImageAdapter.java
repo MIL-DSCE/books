@@ -64,4 +64,25 @@ public class ImageAdapter extends BaseAdapter {
             "Disgrace", "Great Expectations",
             "The Fault in our Stars", "The Great Gatsby"
     };
+
+    public String[] mString2Ids = {
+            "Paulo Coehlo", "Emily Bronte",
+            "Charlotte Bronte", "Yann Martel",
+            "Jane Austen", "WilliamGolding",
+            "J.M.Coetzee", "Charles Dickens",
+            "John Green", "F.Scott Fitzgerald"
+    };
+
+    public String[] mStringSynopsisid = {
+            "It is a book written by Paulo Coehlo",
+            "It is a book written by Emily Bronte",
+            "It is a book written by Charlotte Bronte",
+            "It is a book written by Yann Martel",
+            "It is a book written by Jane Austen",
+            "It is a book written by William Golding",
+            "It is a book written by J.M.Coetzee",
+            "It is a book written by Charles Dickens",
+            "It is a book written by John Green",
+            "It is a book written by F.Scott Fitzgerald"
+    };
 }

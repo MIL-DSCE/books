@@ -53,6 +53,9 @@ public class FirstPage extends AppCompatActivity implements
     Button b3;
     Button custom_btn;
     Button database_button;
+    private FirebaseAuth auth;
+    TextView tv_6;
+    private String user_name;
 
 
     @Override
@@ -62,22 +65,10 @@ public class FirstPage extends AppCompatActivity implements
 
 
 
-        // Views
-        mStatusTextView = (TextView) findViewById(R.id.status);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        auth = FirebaseAuth.getInstance();
+        tv_6 = (TextView) findViewById(R.id.textView6);
+        user_name = auth.getCurrentUser().getDisplayName();
 
-        myRef.setValue("Hello, World!").addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
 
         /* Button listeners */
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -102,11 +93,11 @@ public class FirstPage extends AppCompatActivity implements
         b3 = (Button) findViewById(R.id.button3);
         b3.setOnClickListener(new View.OnClickListener() {
 
-                                  @Override
-                                  public void onClick(View v) {
-                                      startActivity(new Intent(FirstPage.this, AddBooksActivity.class));
-                                  }
-                              });
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FirstPage.this, AddBooksActivity.class));
+            }
+        });
 
 
         //custom button
@@ -123,60 +114,20 @@ public class FirstPage extends AppCompatActivity implements
         custom_btn = (Button) findViewById(R.id.alt_custom);
         custom_btn.setOnClickListener(new View.OnClickListener(){
 
-                                           @Override
-                                           public void onClick(View v) {
-                                               startActivity(new Intent(FirstPage.this, AltCustomGridMainActivity.class));
-                                           }
-                                       });
-
-        // database button
-        database_button = (Button) findViewById(R.id.button4);
-        database_button.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(FirstPage.this, MainDatabaseActivity.class));
+                startActivity(new Intent(FirstPage.this, AltCustomGridMainActivity.class));
             }
         });
 
 
 
-        //grid view button
-
-        grid_btn = (Button) findViewById(R.id.grid_button);
-        grid_btn.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            startActivity(new Intent(FirstPage.this, Main4Activity.class));
-                                        }
-                                    });
 
 
-                bt = (Button) findViewById(R.id.register_button);
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(FirstPage.this, SignupActivity.class));
-            }
-        });
 
 
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+
 
         // [START configure_signin]
         // Configure sign-in to request the user's ID, email address, and basic
@@ -195,14 +146,6 @@ public class FirstPage extends AppCompatActivity implements
                 .build();
         // [END build_client]
 
-        // [START customize_button]
-        // Customize sign-in button. The sign-in button can be displayed in
-        // multiple sizes and color schemes. It can also be contextually
-        // rendered based on the requested scopes. For example. a red button may
-        // be displayed when Google+ scopes are requested, but a white button
-        // may be displayed when only basic profile is requested. Try adding the
-        // Scopes.PLUS_LOGIN scope to the GoogleSignInOptions to see the
-        // difference.
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
@@ -331,7 +274,7 @@ public class FirstPage extends AppCompatActivity implements
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
-            mStatusTextView.setText(R.string.signed_out);
+            mStatusTextView.setText("Signed out");
 
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
@@ -354,4 +297,4 @@ public class FirstPage extends AppCompatActivity implements
     }
 
 
-    }
+}

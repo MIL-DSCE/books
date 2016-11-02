@@ -30,6 +30,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 
@@ -39,62 +40,85 @@ import java.io.IOException;
 public class AddBooksActivity extends Activity {
     String[] books = {"Adultery ", "The Fault in our stars", "Disgrace", "Great Expectation", "Jane Eyre", "Life of Pi"};
 
-    Button skip_btn;
+    Button skip_btn,first_page;
     Button profile_btn;
     private AutoCompleteTextView text;
     private MultiAutoCompleteTextView text1;
     private Button save_btn;
-    String category1, sub_cat;
+    String category1, sub_cat, username, node;
+    TextView textView4;
+    private String userId;
+    private FirebaseAuth auth;
+    private String userName, userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_books);
 
+
+        auth = FirebaseAuth.getInstance();
+
         Firebase.setAndroidContext(this);
         text = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView1);
         text1 = (MultiAutoCompleteTextView) findViewById(R.id.multiAutoCompleteTextView1);
         save_btn = (Button) findViewById(R.id.add_database_button);
+        userId = auth.getCurrentUser().getUid();
+        first_page = (Button) findViewById(R.id.button);
 
 
 
 
-
+        first_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddBooksActivity.this, FirstPage.class));
+            }
+        });
 
 
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // variable defination
-                category1 = "mybooks";
-                sub_cat = "book-i-own";
-
+                //Creating Fiction object
+                final Fiction fiction = new Fiction();
                 //Creating firebase object
-                Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/"+category1+"/"+sub_cat);
-
-
+                Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/"+userId);
                 //Getting values to store
                 String single = text.getText().toString().trim();
                 String multi = text1.getText().toString().trim();
-
-                //Creating Fiction object
-                final Fiction fiction = new Fiction();
-
                 //Adding values
                 fiction.setName(single);
                 fiction.setMulti(multi);
-
                 //Storing values to firebase
-                ref.child("Fiction").setValue(fiction);
+                ref.child("Books").child("Fiction").setValue(fiction);
+                //Value event listener for realtime data update
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                            //Getting the data from snapshot
+                            Fiction fiction = postSnapshot.getValue(Fiction.class);
+
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        System.out.println("The read failed: " + firebaseError.getMessage());
+                    }
+                });
 
 
             }
         });
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, books);
-
         text.setAdapter(adapter);
         text.setThreshold(1);
+
 
         text1.setAdapter(adapter);
         text1.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());

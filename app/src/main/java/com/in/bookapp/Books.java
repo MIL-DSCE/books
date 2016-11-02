@@ -1,15 +1,18 @@
 
 package com.in.bookapp;
 
+import java.net.URL;
+
 public class Books {
-    private String title, genre, year;
+    private String title, author, year;
+    private URL imageUrl;
 
     public Books() {
     }
 
     public Books(String title, String genre, String year) {
         this.title = title;
-        this.genre = genre;
+        this.author = author;
         this.year = year;
     }
 
@@ -29,11 +32,14 @@ public class Books {
         this.year = year;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setAuthor(String author) {
+        this.author = author;
     }
+
+    public URL getImageUrl() {return imageUrl;}
+    public void setImageUrl(URL imageUrl){this.imageUrl = imageUrl; }
 }

@@ -15,28 +15,58 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/SingleView">
+        android:layout_toEndOf="@+id/SingleView"
+        android:id="@+id/relativeLayout">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/book1_name"
-        android:id="@+id/textView"
-
+        android:text="Book Title"
+        android:id="@+id/tv_title"
+        android:layout_marginTop="30dp"
         android:layout_marginStart="73dp"
-        android:textSize="25dp"
+        android:layout_marginRight="40dp"
+        android:textSize="20dp"
         android:textIsSelectable="false"
         android:textColor="@color/white" />
 
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Borrow"
+        android:id="@+id/button2"
+        android:background="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/SingleView"
+        android:layout_alignStart="@+id/SingleView"
+        android:layout_marginTop="63dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Paulo Coelho"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/textView"
-        android:layout_alignEnd="@+id/textView"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="SYNOPSIS"
+        android:id="@+id/textView7"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Author Name"
+        android:id="@+id/tv_author"
         android:textSize="20dp"
         android:textIsSelectable="false"
-        android:textColor="@color/colorAccent" />
-    </RelativeLayout>
+        android:textColor="@color/colorAccent"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignEnd="@+id/relativeLayout" />
 
 </RelativeLayout>

@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    tools:context=".FirstPage" >
 
     <GridView
-        android:numColumns="auto_fit"
+        android:numColumns="2"
         android:gravity="center"
         android:columnWidth="100dp"
         android:stretchMode="columnWidth"

@@ -10,6 +10,7 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -55,6 +56,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
+    compile 'com.google.firebase:firebase-storage:9.6.1'
 
     // RecyclerView
     compile 'com.android.support:recyclerview-v7:24.2.1'
@@ -66,7 +68,10 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
     compile 'com.firebase:firebase-client-android:2.4.0'
-
-
+    //Google books Api
+    compile 'com.google.apis:google-api-services-books:v1-rev88-1.22.0'
+    compile 'com.loopj.android:android-async-http:1.4.8'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'cz.msebera.android:httpclient:4.3.6'
 }
 apply plugin: 'com.google.gms.google-services'
