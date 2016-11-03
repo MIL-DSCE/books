@@ -6,6 +6,8 @@
     <string name="loading" />
     <string name="sign_up">Sign Up</string>
     <string name="user_name">UserName</string>
+    <string name="borrow_book">Borrow this book</string>
+    <string name="collection">Add to you collection</string>
 
 
     <string name="emailpassword_status_fmt" />

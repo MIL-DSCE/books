@@ -11,15 +11,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import org.apache.http.Header;
 
+import com.firebase.client.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.in.bookapp.R;
 import com.in.bookapp.Book;
 import com.in.bookapp.BookClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
-import cz.msebera.android.httpclient.Header;
 
 
 import org.json.JSONArray;
@@ -37,6 +41,7 @@ public class BookDetailActivity extends ActionBarActivity {
     private TextView tvPublisher;
     private TextView tvPageCount;
     private BookClient client;
+    private Button btn_collection, btn_borrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +53,18 @@ public class BookDetailActivity extends ActionBarActivity {
         tvAuthor = (TextView) findViewById(R.id.tvAuthor);
         tvPublisher = (TextView) findViewById(R.id.tvPublisher);
         tvPageCount = (TextView) findViewById(R.id.tvPageCount);
+        btn_borrow = (Button) findViewById(R.id.button4);
+        btn_collection = (Button) findViewById(R.id.add_to_collection_button);
         // Use the book to populate the data into our views
         Book book = (Book) getIntent().getSerializableExtra(BookListActivity.BOOK_DETAIL_KEY);
         loadBook(book);
+        // Adding book to firebase database
+        Firebase.setAndroidContext(this);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String uid = auth.getCurrentUser().getUid();
+        Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/"+uid);
+        ref.child("Books you own").setValue(book.getTitle());
+
     }
 
     // Populate data for the book

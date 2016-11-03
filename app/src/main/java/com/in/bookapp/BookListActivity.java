@@ -12,16 +12,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-
-import com.in.bookapp.R;
-import com.in.bookapp.Book;
-import com.in.bookapp.BookClient;
-import com.in.bookapp.BookAdapter;
+import org.apache.http.Header;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import cz.msebera.android.httpclient.Header;
 
 import java.util.ArrayList;
 
@@ -66,8 +61,10 @@ public class BookListActivity extends AppCompatActivity {
         progress.setVisibility(ProgressBar.VISIBLE);
         client = new BookClient();
         client.getBooks(query, new JsonHttpResponseHandler() {
+
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
                 try {
                     // hide progress bar
                     progress.setVisibility(ProgressBar.GONE);
@@ -90,7 +87,6 @@ public class BookListActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
