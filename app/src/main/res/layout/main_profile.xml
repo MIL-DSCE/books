@@ -13,14 +13,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="Name"
-            android:layout_alignTop="@+id/view"
-            android:layout_alignParentStart="true"
-            android:id="@+id/editText3" />
-
     </android.support.design.widget.TextInputLayout>
 
 
@@ -32,36 +24,47 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/view">
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:ems="10"
-            android:hint="Contact No."
-            android:id="@+id/editText4"
-            android:layout_below="@+id/view"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"/>
 
-
-
-
-        </android.support.design.widget.TextInputLayout>
-
+    </android.support.design.widget.TextInputLayout>
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/img_view"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/ic_launcher" />
 
 
     <Button
-
-        android:layout_width="fill_parent"
-
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dip"
-        android:background="@color/colorPrimary"
+        android:text="Save Changes"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="5dp"
+        android:background="@color/colorAccent"
 
-        android:textColor="@android:color/black"
-
-        android:text="Save and Proceed"
+        android:textAllCaps="false"
         android:id="@+id/save_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="163dp" />
 
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:hint="Contact No."
+        android:id="@+id/editText4"
+        android:layout_above="@+id/save_button"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:id="@+id/editText3"
+        android:layout_above="@+id/editText4"
         android:layout_alignParentStart="true" />
 </RelativeLayout>

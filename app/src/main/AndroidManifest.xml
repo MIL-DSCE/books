@@ -36,7 +36,6 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ImageUploadActivity" />
         <activity
             android:name=".ListItemsActivity"
             android:label="@string/title_activity_list_items"
