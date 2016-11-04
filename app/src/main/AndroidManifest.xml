@@ -53,6 +53,7 @@
             android:name=".BookListActivity"
             android:label="BookListActivity"
             android:theme="@style/AppTheme" />
+        <activity android:name=".ListUsersActivity"></activity>
     </application>
 
 </manifest>

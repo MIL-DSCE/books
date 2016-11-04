@@ -2,7 +2,6 @@ package com.in.bookapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -14,9 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.client.DataSnapshot;
+
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
@@ -42,16 +40,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     Button browse_btn, view_books;
     Button add_books_btn, profile_btn;
-    Button signOut;
+    Button signOut, btn_users;
     Button upload;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authListener;
     private TextView user_name, user_contact;
-    private String uid, string;
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    public static final String Name = "nameKey";
-    private Button mGoogle;
-
+    private String uid;
 
 
 
@@ -65,6 +59,13 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
+        btn_users = (Button) findViewById(R.id.btn_users);
+        btn_users.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, ListUsersActivity.class ));
+            }
+        });
 
         //setting profile picture
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -100,21 +101,16 @@ public class ProfileActivity extends AppCompatActivity {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
-        Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/"+uid);
-        final DatabaseReference profileRef = database.getReferenceFromUrl("https://bookapp-c0f06.firebaseio.com/"+uid);
+        Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/users/"+uid);
+        final DatabaseReference profileRef = database.getReferenceFromUrl("https://bookapp-c0f06.firebaseio.com/users/"+uid);
         profileRef.orderByChild("Profile Details/name").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-                Profile profile = dataSnapshot.getValue(Profile.class);
-                String string = profile.getName();
-                user_name.setText(string);
+
             }
 
             @Override
             public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-                Profile profile = dataSnapshot.getValue(Profile.class);
-                String string = profile.getName();
-                user_name.setText(string);
 
             }
 
@@ -141,16 +137,12 @@ public class ProfileActivity extends AppCompatActivity {
         contactRef.orderByChild("Profile Details/contact").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-                Profile profile = dataSnapshot.getValue(Profile.class);
-                String string2 = profile.getContact();
-                user_contact.setText(string2);
+
             }
 
             @Override
             public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-                Profile profile = dataSnapshot.getValue(Profile.class);
-                String string2 = profile.getContact();
-                user_contact.setText(string2);
+
 
             }
 

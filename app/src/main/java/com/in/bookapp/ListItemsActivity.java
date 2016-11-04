@@ -21,6 +21,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -108,7 +111,6 @@ public class ListItemsActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     @Override
@@ -163,13 +165,48 @@ public class ListItemsActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,int id) {
                         // get user input and set it to result
                         // edit text
-
-                        String listItemText = userInput.getText().toString();
+                        final Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/");
+                        Firebase newBookRef = ref.child("Books").push();
+                        final String listItemText = userInput.getText().toString();
+                        final String newBookKey = newBookRef.getKey();
                         ListItem listItem = new ListItem(listItemText);
                         Map<String, Object> listItemValues = listItem.toMap();
                         Map<String, Object> childUpdates = new HashMap<>();
                         childUpdates.put("/"+uid+"/Books You Own/" + key, listItemValues);
                         FirebaseDatabase.getInstance().getReference().updateChildren(childUpdates);
+
+
+
+                        ref.child(newBookRef.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(com.firebase.client.DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    Toast.makeText(ListItemsActivity.this, listItemText + " already added", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    // Creating the data
+                                    Map newBook = new HashMap();
+                                    newBook.put("Title", "" + listItemText);
+                                    Map updatedBookRef = new HashMap();
+                                    updatedBookRef.put(uid+ "/Books/" +newBookKey, true);
+                                    updatedBookRef.put("Books/" +newBookKey, newBook);
+                                    // Do a deep-path update
+                                    ref.updateChildren(updatedBookRef, new Firebase.CompletionListener() {
+                                        @Override
+                                        public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                                        }
+                                    });
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
+
+
 
                     }
                 }).create()

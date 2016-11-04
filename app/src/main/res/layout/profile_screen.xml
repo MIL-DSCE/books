@@ -124,6 +124,13 @@
                 android:id="@+id/borrowed_btn" />
 
             <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="List users"
+                android:id="@+id/btn_users"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Image Upload"

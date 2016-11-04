@@ -2,7 +2,7 @@
 <resources>
 
 
-        <color name="colorPrimaryDark">#06D6A0</color>
+        <color name="colorPrimaryDark">#A8D0DB</color>
         <color name="colorPrimary">#4B3F72</color>
         <color name="colorAccent">#119DA4</color>
 
@@ -18,7 +18,7 @@
         <color name="btn_login">#26ae90</color>
         <color name="btn_login_bg">#eceef1</color>
         <color name="lbl_name">#333333</color>
-        <color name="btn_logut_bg">#ff6861</color>
+        <color name="btn_logout_bg">#ff6861</color>
         <color name="year">#999999</color>
         <color name="title">#222222</color>
 

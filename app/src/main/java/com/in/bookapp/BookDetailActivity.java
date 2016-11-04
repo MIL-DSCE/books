@@ -11,9 +11,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.apache.http.Header;
 
 import com.firebase.client.Firebase;
@@ -58,12 +61,6 @@ public class BookDetailActivity extends ActionBarActivity {
         // Use the book to populate the data into our views
         Book book = (Book) getIntent().getSerializableExtra(BookListActivity.BOOK_DETAIL_KEY);
         loadBook(book);
-        // Adding book to firebase database
-        Firebase.setAndroidContext(this);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String uid = auth.getCurrentUser().getUid();
-        Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/"+uid);
-        ref.child("Books you own").setValue(book.getTitle());
 
     }
 

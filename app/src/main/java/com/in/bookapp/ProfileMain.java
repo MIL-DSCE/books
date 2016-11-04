@@ -70,7 +70,7 @@ public class ProfileMain extends AppCompatActivity {
             public void onClick(View v) {
 
                 final Profile profile = new Profile();
-                Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/" + userId);
+                Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/users/" + userId);
                 String name = ed_name.getText().toString().trim();
                 String contact = ed_contact.getText().toString().trim();
                 int numbers[] = {1,2,3,4,5,6,10};
