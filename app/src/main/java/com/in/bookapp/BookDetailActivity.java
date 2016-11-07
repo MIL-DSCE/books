@@ -59,8 +59,19 @@ public class BookDetailActivity extends ActionBarActivity {
         btn_borrow = (Button) findViewById(R.id.button4);
         btn_collection = (Button) findViewById(R.id.add_to_collection_button);
         // Use the book to populate the data into our views
-        Book book = (Book) getIntent().getSerializableExtra(BookListActivity.BOOK_DETAIL_KEY);
+        final Book book = (Book) getIntent().getSerializableExtra(BookListActivity.BOOK_DETAIL_KEY);
         loadBook(book);
+
+        btn_borrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BookDetailActivity.this, ListUsersActivity.class);
+                intent.putExtra("title", book.getTitle());
+                startActivity(intent);;
+            }
+        });
+
+
 
     }
 

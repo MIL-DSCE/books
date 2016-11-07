@@ -11,31 +11,30 @@ import java.util.Map;
  * Created by RASHI on 04-Nov-16.
  */
 public class ListUsers implements Serializable {
-    private String displayName;
-    private String uid;
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    @Override
-    public String toString() {
-        return this.displayName;
-    }
+    private String name;
+    private int image;
 
     public ListUsers() {
 
     }
 
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("displayName", displayName);
-        return result;
-
+    public String getName() {
+        return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getImage(){
+        return image;
+    }
+
+    public void setImage(int image){
+        this.image = image;
+    }
+
+
+
+
 }

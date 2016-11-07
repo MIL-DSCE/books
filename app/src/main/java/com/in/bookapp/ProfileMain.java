@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -42,6 +43,7 @@ public class ProfileMain extends AppCompatActivity {
     private static final int SELECT_PICTURE = 100;
     private String uid;
     private FirebaseAuth auth;
+    String username;
 
 
     @Override
@@ -49,6 +51,11 @@ public class ProfileMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_profile);
 
+        TextView textView = (TextView) findViewById(R.id.textView_username);
+
+        Intent i = getIntent();
+        username = i.getStringExtra("username");
+        textView.setText(username);
 
         auth = FirebaseAuth.getInstance();
 
@@ -63,87 +70,10 @@ public class ProfileMain extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.img_view);
         onImageViewClick(); // for selecting an Image from gallery.
 
-
-
-        ed_name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                bt_save.setEnabled(false);
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().trim().length()>0){
-                    bt_save.setEnabled(true);
-                } else {
-                    bt_save.setEnabled(false);
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                final Profile profile = new Profile();
-                Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/users/" + userId);
-                String name = ed_name.getText().toString().trim();
-                String contact = ed_contact.getText().toString().trim();
-                int numbers[] = {1,2,3,4,5,6,10};
-                String num = numbers.toString();
-
-
-
-                if (TextUtils.isEmpty(name)){
-                    Toast.makeText(ProfileMain.this, "The name field cannot be left empty!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(contact)){
-                    Toast.makeText(ProfileMain.this, "The contact field cannot be left empty!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (contact.length()<10 || contact.length()>10) {
-                    Toast.makeText(ProfileMain.this, "Please provide valid contact details.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (contact.startsWith(num)){
-                    Toast.makeText(ProfileMain.this, "Please provide valid contact details.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                profile.setName(name);
-                profile.setContact(contact);
-
-                ref.child("Profile Details").setValue(profile);
-                ref.child("Profile Details").child("Email ID").setValue(userEmail);
-                //Value event listener for realtime data update
-                ref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                            //Getting the data from snapshot
-                            Profile profile = postSnapshot.getValue(Profile.class);
-
-                            //Adding it to a string
-                            String string = profile.getName();
-                            Intent i = new Intent(ProfileMain.this, ProfileActivity.class);
-                            i.putExtra("string",string);
-                            startActivity(i);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-                        System.out.println("The read failed: " + firebaseError.getMessage());
-                    }
-                });
 
                 StorageReference myfileRef = storageRef.child(uid).child("profilePic.jpg");
                 imageView.setDrawingCacheEnabled(true);
@@ -174,10 +104,39 @@ public class ProfileMain extends AppCompatActivity {
                     }
                 });
 
+                final Profile profile = new Profile();
+                Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/users/" + userId);
+                String name = ed_name.getText().toString().trim();
+                String contact = ed_contact.getText().toString().trim();
 
+                profile.setName(name);
+                profile.setContact(contact);
 
+                ref.child("Profile Details").setValue(profile);
+                ref.child("Profile Details").child("email-id").setValue(userEmail);
+                ref.child("Profile Details").child("user-name").setValue(username);
+                //Value event listener for realtime data update
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                            //Getting the data from snapshot
+                            Profile profile = postSnapshot.getValue(Profile.class);
 
+                            //Adding it to a string
+                            String string = profile.getName();
+                            Intent i = new Intent(ProfileMain.this, ProfileActivity.class);
+                            i.putExtra("string",string);
+                            startActivity(i);
                         }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        System.out.println("The read failed: " + firebaseError.getMessage());
+                    }
+                });
+            }
 
 
         });

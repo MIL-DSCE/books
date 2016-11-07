@@ -41,7 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
     Button browse_btn, view_books;
     Button add_books_btn, profile_btn;
     Button signOut, btn_users;
-    Button upload;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authListener;
     private TextView user_name, user_contact;
@@ -67,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        //setting profile picture
+        // Setting up profile picture
         FirebaseStorage storage = FirebaseStorage.getInstance();
         final ImageView image_view = (ImageView) findViewById(R.id.image_view);
         StorageReference storageRef = storage.getReferenceFromUrl("gs://bookapp-c0f06.appspot.com/");
@@ -106,6 +105,9 @@ public class ProfileActivity extends AppCompatActivity {
         profileRef.orderByChild("Profile Details/name").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                Profile profile = new Profile();
+                String string = profile.getName();
+                user_name.setText(string);
 
             }
 
@@ -137,6 +139,9 @@ public class ProfileActivity extends AppCompatActivity {
         contactRef.orderByChild("Profile Details/contact").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                Profile profile = new Profile();
+                String string2 = profile.getContact();
+                user_contact.setText(string2);
 
             }
 
@@ -160,17 +165,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
-
-
-        //Image Upload demo
-        upload = (Button) findViewById(R.id.img_upload);
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ProfileActivity.this, ImageUploadActivity.class));
             }
         });
 

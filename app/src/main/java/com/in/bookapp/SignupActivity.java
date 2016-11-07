@@ -49,6 +49,11 @@ public class SignupActivity extends AppCompatActivity {
         userName = (EditText) findViewById(R.id.usernamebtn);
 
 
+        String username = userName.getText().toString();
+        Intent i = new Intent(SignupActivity.this, ProfileMain.class);
+        i.putExtra("username", username);
+
+
         //Creating firebase object
         Firebase.setAndroidContext(this);
 
