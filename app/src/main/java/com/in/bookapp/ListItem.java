@@ -52,7 +52,6 @@ public class ListItem {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("listItemText", listItemText);
-        result.put("listItemCreationDate", listItemCreationDate);
         return result;
     }
 

@@ -26,12 +26,15 @@ import com.firebase.client.ValueEventListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileMain extends AppCompatActivity {
 
@@ -43,7 +46,8 @@ public class ProfileMain extends AppCompatActivity {
     private static final int SELECT_PICTURE = 100;
     private String uid;
     private FirebaseAuth auth;
-    String username;
+    private Button image_save;
+    private EditText userName;
 
 
     @Override
@@ -51,11 +55,7 @@ public class ProfileMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_profile);
 
-        TextView textView = (TextView) findViewById(R.id.textView_username);
 
-        Intent i = getIntent();
-        username = i.getStringExtra("username");
-        textView.setText(username);
 
         auth = FirebaseAuth.getInstance();
 
@@ -64,17 +64,18 @@ public class ProfileMain extends AppCompatActivity {
         ed_contact = (EditText) findViewById(R.id.editText4);
         bt_save = (Button) findViewById(R.id.save_button);
         userId = auth.getCurrentUser().getUid();
+        userName = (EditText) findViewById(R.id.editText3);
         userEmail = auth.getCurrentUser().getEmail();
         uid = auth.getCurrentUser().getUid();
+        image_save = (Button) findViewById(R.id.button);
         //getting the reference of the views
         imageView = (ImageView) findViewById(R.id.img_view);
         onImageViewClick(); // for selecting an Image from gallery.
 
-        bt_save.setOnClickListener(new View.OnClickListener() {
+        // Saving Display picture
+        image_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 StorageReference myfileRef = storageRef.child(uid).child("profilePic.jpg");
                 imageView.setDrawingCacheEnabled(true);
                 imageView.buildDrawingCache();
@@ -103,39 +104,36 @@ public class ProfileMain extends AppCompatActivity {
                         System.out.println(taskSnapshot.getBytesTransferred());
                     }
                 });
+            }
+        });
 
-                final Profile profile = new Profile();
-                Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/users/" + userId);
+        // Saving Username, Display Name and Contact number
+
+        bt_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 String name = ed_name.getText().toString().trim();
                 String contact = ed_contact.getText().toString().trim();
+                String username = userName.getText().toString();
 
-                profile.setName(name);
-                profile.setContact(contact);
+                Map<String, Object> updates = new HashMap<>();
+                Map<String, Object> updates2 = new HashMap<>();
+                Map<String, Object> updates3 = new HashMap<>();
+                Map<String, Object> updates4 = new HashMap<>();
+                updates.put("name", name);
+                updates2.put("contact", contact);
+                updates3.put("user-name", username);
+                updates4.put("email", auth.getCurrentUser().getEmail());
 
-                ref.child("Profile Details").setValue(profile);
-                ref.child("Profile Details").child("email-id").setValue(userEmail);
-                ref.child("Profile Details").child("user-name").setValue(username);
-                //Value event listener for realtime data update
-                ref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                            //Getting the data from snapshot
-                            Profile profile = postSnapshot.getValue(Profile.class);
+                FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("profile-detail").updateChildren(updates);
+                FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("profile-detail").updateChildren(updates2);
+                FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("profile-detail").updateChildren(updates3);
+                FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("profile-detail").updateChildren(updates4);
+                Toast.makeText(ProfileMain.this, "Profile successfully created.", Toast.LENGTH_SHORT).show();
 
-                            //Adding it to a string
-                            String string = profile.getName();
-                            Intent i = new Intent(ProfileMain.this, ProfileActivity.class);
-                            i.putExtra("string",string);
-                            startActivity(i);
-                        }
-                    }
+                startActivity(new Intent(ProfileMain.this, ProfileActivity.class));
 
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-                        System.out.println("The read failed: " + firebaseError.getMessage());
-                    }
-                });
             }
 
 

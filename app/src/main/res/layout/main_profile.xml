@@ -33,16 +33,12 @@
     </android.support.design.widget.TextInputLayout>
 
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView_username"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
-
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/img_view"
+        android:layout_alignEnd="@+id/save_button"
+        android:id="@+id/view">
 
     </android.support.design.widget.TextInputLayout>
 
@@ -51,8 +47,8 @@
         android:layout_height="wrap_content"
         android:hint="Name"
         android:id="@+id/editText3"
-        android:layout_below="@+id/textView_username"
-        android:layout_alignEnd="@+id/save_button" />
+        android:layout_above="@+id/editText4"
+        android:layout_alignParentStart="true" />
 
     <EditText
           android:layout_width="fill_parent"
@@ -61,6 +57,27 @@
           android:ems="10"
           android:hint="Contact No."
           android:id="@+id/editText4"
-        android:layout_below="@+id/editText3"
+        android:layout_above="@+id/save_button"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_above="@+id/editText3"
+        android:layout_toStartOf="@+id/save_button"
+        android:layout_alignEnd="@+id/save_button"
+        android:hint="Username" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/button"
+        android:background="@null"
+        android:textColor="@color/colorAccent"
+        android:layout_above="@+id/view"
+        android:layout_alignEnd="@+id/save_button"
+        android:layout_toEndOf="@+id/img_view" />
 </RelativeLayout>

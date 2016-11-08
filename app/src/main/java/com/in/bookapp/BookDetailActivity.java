@@ -20,6 +20,7 @@ import android.widget.Toast;
 import org.apache.http.Header;
 
 import com.firebase.client.Firebase;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.in.bookapp.R;
@@ -36,6 +37,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BookDetailActivity extends ActionBarActivity {
     private ImageView ivBookCover;
@@ -45,6 +48,8 @@ public class BookDetailActivity extends ActionBarActivity {
     private TextView tvPageCount;
     private BookClient client;
     private Button btn_collection, btn_borrow;
+    FirebaseAuth auth;
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +63,14 @@ public class BookDetailActivity extends ActionBarActivity {
         tvPageCount = (TextView) findViewById(R.id.tvPageCount);
         btn_borrow = (Button) findViewById(R.id.button4);
         btn_collection = (Button) findViewById(R.id.add_to_collection_button);
+        Firebase.setAndroidContext(this);
+        auth = FirebaseAuth.getInstance();
+        uid = auth.getCurrentUser().getUid();
+
         // Use the book to populate the data into our views
         final Book book = (Book) getIntent().getSerializableExtra(BookListActivity.BOOK_DETAIL_KEY);
         loadBook(book);
+        final String key = FirebaseDatabase.getInstance().getReference().child(uid).child("Books You Own").push().getKey();
 
         btn_borrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +78,29 @@ public class BookDetailActivity extends ActionBarActivity {
                 Intent intent = new Intent(BookDetailActivity.this, ListUsersActivity.class);
                 intent.putExtra("title", book.getTitle());
                 startActivity(intent);;
+            }
+        });
+
+        // Adding the book to user's collection
+
+        btn_collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/");
+                Firebase newBookRef = ref.child("Books").push();
+                final String listItemText = book.getTitle().toString();
+                final String newBookKey = newBookRef.getKey();
+                ListItem listItem = new ListItem(listItemText);
+                Map<String, Object> listItemValues = listItem.toMap();
+                Map<String, Object> childUpdates = new HashMap<>();
+                childUpdates.put("/users/" + uid + "/Books You Own/" + key, listItemValues);
+                FirebaseDatabase.getInstance().getReference().updateChildren(childUpdates);
+                String usrInput = book.getTitle().toString();
+                Firebase ref2 = new Firebase("https://bookapp-c0f06.firebaseio.com/" + usrInput);
+                Map<String, Object> updates = new HashMap<>();
+                updates.put(uid, auth.getCurrentUser().getEmail());
+                FirebaseDatabase.getInstance().getReference().child("Books in our Collection").child(usrInput).updateChildren(updates);
+                Toast.makeText(BookDetailActivity.this, book.getTitle() + " has been added to your collection", Toast.LENGTH_SHORT).show();
             }
         });
 

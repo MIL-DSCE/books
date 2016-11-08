@@ -21,6 +21,7 @@ public class ListUsersActivity extends AppCompatActivity {
     ListView UserList;
     Firebase Ref;
     TextView textView;
+    String title;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +32,15 @@ public class ListUsersActivity extends AppCompatActivity {
         UserList = (ListView) findViewById(R.id.mPeopleList);
         textView = (TextView) findViewById(R.id.tv);
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        textView.setText(title);
+        title = intent.getStringExtra("title");
+        textView.setText("People who own " + title);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        Firebase messagesRef = Ref.child("Books").child("Adultery");
+        Firebase messagesRef = Ref.child("Books in our Collection").child(title);
         final FirebaseListAdapter<String> adapter = new FirebaseListAdapter<String>(ListUsersActivity.this, String.class, android.R.layout.simple_list_item_1, messagesRef) {
             @Override
             protected void populateView(View view, String s, int i) {

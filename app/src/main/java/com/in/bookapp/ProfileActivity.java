@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
@@ -101,69 +102,33 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/users/"+uid);
-        final DatabaseReference profileRef = database.getReferenceFromUrl("https://bookapp-c0f06.firebaseio.com/users/"+uid);
-        profileRef.orderByChild("Profile Details/name").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-                Profile profile = new Profile();
-                String string = profile.getName();
-                user_name.setText(string);
+        final Firebase firebaseRef = ref.child("profile-detail").child("name");
 
+        firebaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.getValue(String.class);
+                user_name.setText(name);
             }
 
             @Override
-            public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(com.google.firebase.database.DataSnapshot dataSnapshot) {
-
-
-            }
-
-            @Override
-            public void onChildMoved(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(FirebaseError firebaseError) {
 
             }
         });
 
         // Setting contact details below profile name
         user_contact = (TextView) findViewById(R.id.tv_contact);
-        final DatabaseReference contactRef = database.getReferenceFromUrl("https://bookapp-c0f06.firebaseio.com/"+uid);
-        contactRef.orderByChild("Profile Details/contact").addChildEventListener(new ChildEventListener() {
+        final Firebase firebaseRef2 = ref.child("profile-detail").child("contact");
+        firebaseRef2.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-                Profile profile = new Profile();
-                String string2 = profile.getContact();
-                user_contact.setText(string2);
-
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String contact = dataSnapshot.getValue(String.class);
+                user_contact.setText(contact);
             }
 
             @Override
-            public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-
-
-            }
-
-            @Override
-            public void onChildRemoved(com.google.firebase.database.DataSnapshot dataSnapshot) {
-
-
-            }
-
-            @Override
-            public void onChildMoved(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(FirebaseError firebaseError) {
 
             }
         });

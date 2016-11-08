@@ -48,6 +48,7 @@ public class ListItemsActivity extends AppCompatActivity {
     private ArrayList<ListItem> myListItems;
     private FirebaseAuth auth;
     private String uid;
+    String user;
 
 
     @Override
@@ -59,7 +60,7 @@ public class ListItemsActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         uid = auth.getCurrentUser().getUid();
         mDB= FirebaseDatabase.getInstance().getReference();
-        mListItemRef = mDB.child(uid).child("Books You Own");
+        mListItemRef = mDB.child("users").child(uid).child("Books You Own");
         myListItems = new ArrayList<>();
         mListItemsRecyclerView = (RecyclerView)findViewById(R.id.listItem_recycler_view);
         mListItemsRecyclerView.addItemDecoration(new SimpleDividerItemActivity(getResources()));
@@ -158,6 +159,23 @@ public class ListItemsActivity extends AppCompatActivity {
         userInput.setAdapter(adapter);
         userInput.setThreshold(1);
 
+        // Reading the user-name from database
+        Firebase ref2 = new Firebase("https://bookapp-c0f06.firebaseio.com/users/"+uid);
+        final Firebase firebaseRef = ref2.child("profile-detail").child("user-name");
+        firebaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(com.firebase.client.DataSnapshot dataSnapshot) {
+                user = dataSnapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
+
         // set dialog message
         alertDialogBuilder
                 .setCancelable(true)
@@ -172,22 +190,17 @@ public class ListItemsActivity extends AppCompatActivity {
                         ListItem listItem = new ListItem(listItemText);
                         Map<String, Object> listItemValues = listItem.toMap();
                         Map<String, Object> childUpdates = new HashMap<>();
-                        childUpdates.put("/" + uid + "/Books You Own/" + key, listItemValues);
+                        childUpdates.put("/users/" + uid + "/Books You Own/" + key, listItemValues);
                         FirebaseDatabase.getInstance().getReference().updateChildren(childUpdates);
+                        String usrInput = userInput.getText().toString();
+                        Map<String, Object> updates = new HashMap<>();
 
-                        Map newBook = new HashMap();
-                        newBook.put("Title", "" + listItemText);
 
 
-                        Map updatedBookRef = new HashMap();
-                        updatedBookRef.put(uid + "/Books/" + newBookKey, true);
-                        updatedBookRef.put("Books/" + newBookKey, newBook);
-                        // Do a deep-path update
-                        ref.updateChildren(updatedBookRef, new Firebase.CompletionListener() {
-                            @Override
-                            public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                            }
-                        });
+                        updates.put(uid, user);
+                        FirebaseDatabase.getInstance().getReference().child("Books in our Collection").child(usrInput).updateChildren(updates);
+
+
 
                     }
                 }).create()
@@ -205,7 +218,7 @@ public class ListItemsActivity extends AppCompatActivity {
 
 
     private void fetchData(DataSnapshot dataSnapshot) {
-        ListItem listItem=dataSnapshot.getValue(ListItem.class);
+        ListItem listItem = dataSnapshot.getValue(ListItem.class);
         myListItems.add(listItem);
         updateUI();
     }

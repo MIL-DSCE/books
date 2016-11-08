@@ -46,16 +46,14 @@ public class SignupActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
-        userName = (EditText) findViewById(R.id.usernamebtn);
 
 
-        String username = userName.getText().toString();
-        Intent i = new Intent(SignupActivity.this, ProfileMain.class);
-        i.putExtra("username", username);
 
 
         //Creating firebase object
         Firebase.setAndroidContext(this);
+        final Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/");
+
 
 
 
@@ -82,9 +80,8 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
-                String username = userName.getText().toString();
+                final String email = inputEmail.getText().toString().trim();
+                final String password = inputPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -93,11 +90,6 @@ public class SignupActivity extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(username)) {
-                    Toast.makeText(getApplicationContext(), "Choose an username!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -126,6 +118,7 @@ public class SignupActivity extends AppCompatActivity {
                                 }
                             }
                         });
+
 
 
             }

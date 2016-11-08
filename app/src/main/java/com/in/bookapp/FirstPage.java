@@ -95,7 +95,7 @@ public class FirstPage extends AppCompatActivity implements
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(FirstPage.this, AddBooksActivity.class));
+                startActivity(new Intent(FirstPage.this, ProfileActivity.class));
             }
         });
 

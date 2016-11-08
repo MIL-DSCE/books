@@ -27,7 +27,6 @@
         <activity android:name=".SingleBookActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".AddBooksActivity" />
         <activity android:name=".AltCustomGridMainActivity" />
         <activity android:name=".Main4Activity" />
         <activity android:name=".ProfileActivity" />
@@ -52,7 +51,7 @@
             android:name=".BookListActivity"
             android:label="BookListActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ListUsersActivity"></activity>
+        <activity android:name=".ListUsersActivity" />
     </application>
 
 </manifest>
