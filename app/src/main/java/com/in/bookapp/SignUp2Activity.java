@@ -36,25 +36,36 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProfileMain extends AppCompatActivity {
+public class SignUp2Activity extends AppCompatActivity {
 
-
+    private EditText ed_name;
+    private EditText ed_contact;
+    private Button bt_save;
+    private String userId, userEmail;
     private ImageView imageView;
     private static final int SELECT_PICTURE = 100;
     private String uid;
     private FirebaseAuth auth;
     private Button image_save;
+    private EditText userName;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_profile);
+        setContentView(R.layout.activity_sign_up2);
+
 
 
         auth = FirebaseAuth.getInstance();
 
         Firebase.setAndroidContext(this);
+        ed_name = (EditText) findViewById(R.id.editText3);
+        ed_contact = (EditText) findViewById(R.id.editText4);
+        bt_save = (Button) findViewById(R.id.save_button);
+        userId = auth.getCurrentUser().getUid();
+        userName = (EditText) findViewById(R.id.editText3);
+        userEmail = auth.getCurrentUser().getEmail();
         uid = auth.getCurrentUser().getUid();
         image_save = (Button) findViewById(R.id.button);
         //getting the reference of the views
@@ -77,15 +88,15 @@ public class ProfileMain extends AppCompatActivity {
                 uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(ProfileMain.this, "TASK FAILED", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUp2Activity.this, "TASK FAILED", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(ProfileMain.this, "TASK SUCCEEDED", Toast.LENGTH_SHORT).show();
-                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        Toast.makeText(SignUp2Activity.this, "TASK SUCCEEDED", Toast.LENGTH_SHORT).show();
+                        Uri downloadUrl =taskSnapshot.getDownloadUrl();
                         String DOWNLOAD_URL = downloadUrl.getPath();
-                        Toast.makeText(ProfileMain.this, "Restart the App to view changes to your profile picture", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignUp2Activity.this, "Restart the App to view changes to your profile picture", Toast.LENGTH_LONG).show();
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -94,6 +105,41 @@ public class ProfileMain extends AppCompatActivity {
                     }
                 });
             }
+        });
+
+        // Saving Username, Display Name and Contact number
+
+        bt_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String name = ed_name.getText().toString().trim();
+                String contact = ed_contact.getText().toString().trim();
+                String username = userName.getText().toString();
+
+                Map<String, Object> updates = new HashMap<>();
+                Map<String, Object> updates2 = new HashMap<>();
+                Map<String, Object> updates3 = new HashMap<>();
+                Map<String, Object> updates4 = new HashMap<>();
+                updates.put("name", name);
+                updates2.put("contact", contact);
+                updates3.put("user-name", username);
+                updates4.put("email", auth.getCurrentUser().getEmail());
+
+                FirebaseDatabase.getInstance().getReference().child("users").child(username).child("profile-detail").updateChildren(updates);
+                FirebaseDatabase.getInstance().getReference().child("users").child(username).child("profile-detail").updateChildren(updates2);
+                FirebaseDatabase.getInstance().getReference().child("users").child(username).child("profile-detail").updateChildren(updates3);
+                FirebaseDatabase.getInstance().getReference().child("users").child(username).child("profile-detail").updateChildren(updates4);
+                Toast.makeText(SignUp2Activity.this, "Profile successfully created.", Toast.LENGTH_SHORT).show();
+
+
+                Intent intent = new Intent(SignUp2Activity.this, ProfileActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+
+            }
+
+
         });
 
     }
@@ -146,7 +192,7 @@ public class ProfileMain extends AppCompatActivity {
 
 
 
-    }
+}
 
 
 

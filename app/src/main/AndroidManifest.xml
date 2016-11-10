@@ -52,6 +52,11 @@
             android:label="BookListActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".ListUsersActivity" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:label="@string/title_activity_user_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SignUp2Activity"></activity>
     </application>
 
 </manifest>

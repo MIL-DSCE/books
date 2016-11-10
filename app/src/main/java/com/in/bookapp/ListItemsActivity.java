@@ -37,7 +37,7 @@ import java.util.Map;
 
 
 public class ListItemsActivity extends AppCompatActivity {
-    String[] books = {"Adultery ", "The Fault in our stars", "Disgrace", "Great Expectation", "Jane Eyre", "Life of Pi"};
+    String[] books = {"Adultery ", "The Fault in our stars", "Disgrace", "Great Expectations", "Jane Eyre", "Life of Pi", "The "};
 
     private final String TAG = "ListActivity";
 

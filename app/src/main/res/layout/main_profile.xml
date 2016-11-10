@@ -11,20 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:src="@mipmap/ic_launcher" />
-
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="Save Changes"
-        android:layout_marginRight="5dp"
-        android:background="@color/colorAccent"
-
-        android:textAllCaps="false"
-        android:id="@+id/save_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="85dp" />
+        android:src="@drawable/ic_profile" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -37,37 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/img_view"
-        android:layout_alignEnd="@+id/save_button"
         android:id="@+id/view">
 
     </android.support.design.widget.TextInputLayout>
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="Name"
-        android:id="@+id/editText3"
-        android:layout_above="@+id/editText4"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:inputType="phone"
-          android:ems="10"
-          android:hint="Contact No."
-          android:id="@+id/editText4"
-        android:layout_above="@+id/save_button"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_above="@+id/editText3"
-        android:layout_toStartOf="@+id/save_button"
-        android:layout_alignEnd="@+id/save_button"
-        android:hint="Username" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -78,6 +37,5 @@
         android:background="@null"
         android:textColor="@color/colorAccent"
         android:layout_above="@+id/view"
-        android:layout_alignEnd="@+id/save_button"
         android:layout_toEndOf="@+id/img_view" />
 </RelativeLayout>

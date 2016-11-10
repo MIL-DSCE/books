@@ -19,7 +19,10 @@ import android.widget.Toast;
 
 import org.apache.http.Header;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -50,6 +53,7 @@ public class BookDetailActivity extends ActionBarActivity {
     private Button btn_collection, btn_borrow;
     FirebaseAuth auth;
     String uid;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,21 @@ public class BookDetailActivity extends ActionBarActivity {
             }
         });
 
+        Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/users/");
+        final Firebase firebase = ref.child(uid).child("profile-detail").child("user-name");
+
+        firebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                username = dataSnapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
         // Adding the book to user's collection
 
         btn_collection.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +117,7 @@ public class BookDetailActivity extends ActionBarActivity {
                 String usrInput = book.getTitle().toString();
                 Firebase ref2 = new Firebase("https://bookapp-c0f06.firebaseio.com/" + usrInput);
                 Map<String, Object> updates = new HashMap<>();
-                updates.put(uid, auth.getCurrentUser().getEmail());
+                updates.put(uid, username);
                 FirebaseDatabase.getInstance().getReference().child("Books in our Collection").child(usrInput).updateChildren(updates);
                 Toast.makeText(BookDetailActivity.this, book.getTitle() + " has been added to your collection", Toast.LENGTH_SHORT).show();
             }

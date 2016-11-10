@@ -54,7 +54,10 @@ public class ListUsersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String temp = ((TextView)view).getText().toString();
-                startActivity(new Intent(ListUsersActivity.this, ProfileActivity.class));
+                Intent intent = new Intent(ListUsersActivity.this, UserProfileActivity.class);
+                intent.putExtra("userDisplayName",temp );
+                startActivity(intent);
+
             }
         });
     }

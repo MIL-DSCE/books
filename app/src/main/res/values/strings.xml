@@ -161,6 +161,8 @@
     </string>
     <string name="title_activity_list_user">ListUserActivity</string>
     <string name="title_activity_add_books">AddBooksActivity</string>
+    <string name="title_activity_user_profile">UserProfileActivity</string>
+    <string name="title_activity_sign_up2">SignUp2Activity</string>
 
 
 </resources>
