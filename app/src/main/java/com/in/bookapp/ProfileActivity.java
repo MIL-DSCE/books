@@ -40,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     Button browse_btn, view_books;
-    Button add_books_btn, profile_btn;
+    Button add_books_btn, profile_btn, borrowed;
     Button signOut, btn_users;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authListener;
@@ -67,6 +67,16 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.with(ProfileActivity.this).load(uri).into(image_view);
+            }
+        });
+
+
+        //borrowed books button
+        borrowed = (Button) findViewById(R.id.borrowed_btn);
+        borrowed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, BorrowedBooksActivity.class));
             }
         });
 

@@ -1,6 +1,7 @@
 package com.in.bookapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private TextView userDisplayName, userDisplayContact, userDisplayEmail;
     FirebaseAuth auth;
     private  String uid;
+    private String email2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +44,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userDisplayEmail = (TextView) findViewById(R.id.textView_dpEmail);
         userDisplayContact = (TextView) findViewById(R.id.textView_dpContact);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
+
 
         Firebase ref = new Firebase("https://bookapp-c0f06.firebaseio.com/users/");
         final Firebase firebaseRef = ref.child(userName).child("profile-detail").child("name");
@@ -69,12 +66,25 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String email = dataSnapshot.getValue(String.class);
+                email2 = email;
                 userDisplayEmail.setText(email);
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent emailIntent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + ""+email2));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Borrow a book - via BookWorm");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hi!\n I would like to borrow a book from you.");
+                startActivity(emailIntent);
             }
         });
 

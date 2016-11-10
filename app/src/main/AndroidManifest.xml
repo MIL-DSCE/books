@@ -56,7 +56,8 @@
             android:name=".UserProfileActivity"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SignUp2Activity"></activity>
+        <activity android:name=".SignUp2Activity" />
+        <activity android:name=".BorrowedBooksActivity"></activity>
     </application>
 
 </manifest>
