@@ -52,20 +52,10 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_screen);
+        setContentView(R.layout.activity_profilenew);
         Firebase.setAndroidContext(this);
         auth = FirebaseAuth.getInstance();
         uid = auth.getCurrentUser().getUid();
-
-
-
-        btn_users = (Button) findViewById(R.id.btn_users);
-        btn_users.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ProfileActivity.this, ListUsersActivity.class ));
-            }
-        });
 
         // Setting up profile picture
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -147,14 +137,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        // Browse books
-        browse_btn = (Button) findViewById(R.id.browse_button);
-        browse_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ProfileActivity.this, Main4Activity.class));
-            }
-        });
 
         // Adding books
         add_books_btn = (Button) findViewById(R.id.add_books_you_own);

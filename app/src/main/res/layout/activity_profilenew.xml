@@ -1,57 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/header_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_probg"
+            android:scaleType="center"/>
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@+id/header_cover_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-60dp"
+            android:elevation="5dp"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_profile" />
+
+        <RelativeLayout
+            android:id="@+id/profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header_cover_image"
+            android:background="@color/colorPrimaryDark"
+            android:elevation="4dp"
+            android:paddingBottom="24dp">
 
 
-    <ImageView
-        android:id="@+id/image_view"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:elevation="5dp"
-        android:padding="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_profile"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="76dp"
+                android:textColor="#fff"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView8"
-        android:layout_marginStart="87dp"
-        android:layout_marginTop="20dp"
-        android:layout_alignTop="@+id/image_view"
-        android:textSize="25dp"
-        android:textColor="@color/black"
-        android:layout_toEndOf="@+id/image_view" />
+            <TextView
+                android:id="@+id/tv_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:textColor="#fff"
+                android:textSize="14sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:textColor="@color/black"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_profile_name"
+                android:layout_alignTop="@+id/user"
+                android:layout_centerHorizontal="true"
+                android:textSize="15dp"
+                android:textColor="@color/white" />
 
-        android:textSize="20dp"
-        android:id="@+id/textView9"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/textView8"
-        android:layout_alignStart="@+id/textView8" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:id="@+id/edit_profile_btn"
+                android:background="@null"
+                android:layout_alignTop="@+id/tv_contact"
+                android:layout_alignParentEnd="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:background="@null"
-        android:text="Edit"
-        android:textSize="12dp"
-        android:textAllCaps="false"
-        android:id="@+id/button4"
-        android:layout_below="@+id/textView9"
-        android:layout_alignEnd="@+id/image_view" />
-</RelativeLayout>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_layout"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:id="@+id/imageView3"
+                android:src="@drawable/ic_search"/>
+
+            <Button
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:text="Search books"
+                android:background="@color/colorAccent"
+                android:textAllCaps="false"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/view_books_btn" />
+
+            <Button
+                android:layout_width="350dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:text="@string/add_books_btn"
+                android:id="@+id/add_books_you_own"
+                android:textAllCaps="false"
+                android:background="@color/colorAccent"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/borrowed_btn"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorAccent"
+                android:textAllCaps="false"
+                android:id="@+id/borrowed_btn" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_out"
+            android:id="@+id/sign_out"
+            android:background="@null"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+</ScrollView>

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
     tools:context=".BookListActivity">
 
     <ScrollView
@@ -24,6 +25,7 @@
                 android:background="@null"
                 android:textColor="@color/colorAccent"
                 android:id="@+id/add_to_collection_button"
+                android:textAllCaps="false"
                 android:layout_gravity="right" />
 
             <ImageView
